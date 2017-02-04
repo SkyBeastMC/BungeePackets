@@ -3,19 +3,13 @@ package org.spawl.bungeepackets.item;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
+import org.spawl.bungeepackets.nbt.*;
+import org.spawl.bungeepackets.skin.GameProfile;
 
 import java.io.DataOutput;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-
-import org.spawl.bungeepackets.nbt.NBTBase;
-import org.spawl.bungeepackets.nbt.NBTCompressedStreamTools;
-import org.spawl.bungeepackets.nbt.NBTReadLimiter;
-import org.spawl.bungeepackets.nbt.NBTTagCompound;
-import org.spawl.bungeepackets.nbt.NBTTagList;
-import org.spawl.bungeepackets.nbt.NBTTagString;
-import org.spawl.bungeepackets.skin.GameProfile;
 
 public class ItemStack {
 

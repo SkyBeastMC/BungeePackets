@@ -2,11 +2,6 @@ package org.spawl.bungeepackets;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
-
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.UUID;
-
 import net.md_5.bungee.ServerConnection;
 import net.md_5.bungee.UserConnection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -20,7 +15,6 @@ import net.md_5.bungee.netty.ChannelWrapper;
 import net.md_5.bungee.netty.PipelineUtils;
 import net.md_5.bungee.protocol.AbstractPacketHandler;
 import net.md_5.bungee.protocol.Protocol;
-
 import org.spawl.bungeepackets.connection.BungeeConnection;
 import org.spawl.bungeepackets.effect.ParticleEffect;
 import org.spawl.bungeepackets.encoder.CustomDecoder;
@@ -33,15 +27,14 @@ import org.spawl.bungeepackets.packet.client.InFlying;
 import org.spawl.bungeepackets.packet.client.InFlying.InPosition;
 import org.spawl.bungeepackets.packet.client.InFlying.InPositionLook;
 import org.spawl.bungeepackets.packet.client.InWindowClick;
-import org.spawl.bungeepackets.packet.server.OutCloseWindow;
-import org.spawl.bungeepackets.packet.server.OutNamedSoundEffect;
-import org.spawl.bungeepackets.packet.server.OutOpenWindow;
-import org.spawl.bungeepackets.packet.server.OutSetSlot;
-import org.spawl.bungeepackets.packet.server.OutWindowItems;
-import org.spawl.bungeepackets.packet.server.OutWorldParticles;
+import org.spawl.bungeepackets.packet.server.*;
 import org.spawl.bungeepackets.util.Position;
 import org.spawl.bungeepackets.util.Reflection;
 import org.spawl.bungeepackets.util.Util;
+
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class BungeePackets extends Plugin implements Listener {
 
