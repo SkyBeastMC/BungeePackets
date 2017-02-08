@@ -10,6 +10,7 @@ import net.md_5.bungee.protocol.Protocol;
 import org.spawl.bungeepackets.api.BungeePackets;
 import org.spawl.bungeepackets.api.event.PacketFilter;
 import org.spawl.bungeepackets.api.event.PacketListener;
+import org.spawl.bungeepackets.api.event.ProtocolMapping;
 import org.spawl.bungeepackets.api.inventory.Inventory;
 import org.spawl.bungeepackets.api.inventory.InventoryType;
 import org.spawl.bungeepackets.api.inventory.ItemStack;
@@ -18,11 +19,9 @@ import org.spawl.bungeepackets.api.nbt.NBTTagCompound;
 import org.spawl.bungeepackets.inventory.InventoryImpl;
 import org.spawl.bungeepackets.inventory.ItemStackImpl;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 
@@ -41,28 +40,6 @@ public class BungeePacketsImpl extends BungeePackets
 			L_BUNGEE_SERVER_NONE = new ArrayList<>(),
 			L_PLAYER_BUNGEE_NONE = new ArrayList<>(),
 			L_SERVER_BUNGEE_NONE = new ArrayList<>();
-
-	private static final Method REGISTER_PACKET_METHOD;
-
-	static
-	{
-		try
-		{
-			REGISTER_PACKET_METHOD = Protocol.DirectionData.class.getDeclaredMethod("registerPacket",
-					int.class, Class.class);
-			REGISTER_PACKET_METHOD.setAccessible(true);
-		}
-		catch (ReflectiveOperationException e)
-		{
-			throw new RuntimeException("Cannot access register packet method", e);
-		}
-	}
-
-	@Override
-	protected void registerPacketImpl(@NonNull PacketListener listener)
-	{
-		addListener(listener);
-	}
 
 	private static void addListener(PacketListener listener)
 	{
@@ -103,10 +80,9 @@ public class BungeePacketsImpl extends BungeePackets
 			Method method = listener.getClass().getDeclaredMethod(methodName);
 			return method.getAnnotation(PacketFilter.class);
 		}
-		catch (ReflectiveOperationException e)
+		catch (NoSuchMethodException ignored)
 		{
-			throw new IllegalArgumentException("Cannot access method " + methodName + " on listener " + listener
-					.getClass(), e);
+			return null;
 		}
 	}
 
@@ -200,18 +176,75 @@ public class BungeePacketsImpl extends BungeePackets
 		return false;
 	}
 
-	@Override
-	protected void registerPacketImpl(@NonNull Protocol.DirectionData data, int id,
-	                                  @NonNull Class<? extends DefinedPacket> packet)
+	private static final Class PROTOCOL_MAPPING_CLASS;
+	private static final Method PROTOCOL_MAP_METHOD;
+	private static final Method REGISTER_PACKET_METHOD;
+
+	static
 	{
 		try
 		{
-			REGISTER_PACKET_METHOD.invoke(data, id, packet);
+			PROTOCOL_MAPPING_CLASS = Class.forName("net.md_5.bungee.protocol.Protocol$ProtocolMapping");
+
+			PROTOCOL_MAP_METHOD = Protocol.class.getDeclaredMethod("map",
+					int.class, int.class);
+			PROTOCOL_MAP_METHOD.setAccessible(true);
+
+			Class protocolMapArray = Class.forName("[L" + PROTOCOL_MAPPING_CLASS.getName() + ';');
+			REGISTER_PACKET_METHOD = Protocol.DirectionData.class.getDeclaredMethod("registerPacket",
+					Class.class, protocolMapArray);
+			REGISTER_PACKET_METHOD.setAccessible(true);
+
+		}
+		catch (ReflectiveOperationException e)
+		{
+			throw new RuntimeException("Cannot access register packet method", e);
+		}
+	}
+
+	private static void addPacket(Protocol.DirectionData direction,
+	                              Class<? extends DefinedPacket> packet,
+	                              ProtocolMapping... protocols)
+	{
+		try
+		{
+			Object protocolArray = mapProtocols(protocols);
+			REGISTER_PACKET_METHOD.invoke(direction, packet, protocolArray);
 		}
 		catch (ReflectiveOperationException e)
 		{
 			throw new IllegalArgumentException("Cannot register packet " + packet, e);
 		}
+	}
+
+	private static Object mapProtocols(ProtocolMapping... protocols)
+			throws ReflectiveOperationException
+	{
+		Object maps = Array.newInstance(PROTOCOL_MAPPING_CLASS, protocols.length);
+		for (int i = 0; i < protocols.length; i++)
+			Array.set(maps, i, mapProtocol(protocols[i]));
+
+		return maps;
+	}
+
+	private static Object mapProtocol(ProtocolMapping protocolMapping)
+			throws ReflectiveOperationException
+	{
+		return PROTOCOL_MAP_METHOD.invoke(null, protocolMapping.getProtocol(), protocolMapping.getPacketID());
+	}
+
+	@Override
+	protected void registerPacketListenerImpl(@NonNull PacketListener listener)
+	{
+		addListener(listener);
+	}
+
+	@Override
+	protected void registerPacketImpl(@NonNull Protocol.DirectionData direction,
+	                                  @NonNull Class<? extends DefinedPacket> packet,
+	                                  @NonNull ProtocolMapping... protocols)
+	{
+		addPacket(direction, packet, protocols);
 	}
 
 	@Override

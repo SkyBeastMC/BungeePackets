@@ -35,11 +35,11 @@ allprojects {
     apply plugin: 'java'
 
     configurations {
-        provided
+        include
     }
 
     sourceSets {
-        main { compileClasspath += configurations.provided }
+        main { compileClasspath += configurations.include }
     }
 
     repositories {
@@ -48,14 +48,24 @@ allprojects {
 
     dependencies {
         compile "org.projectlombok:lombok:1.16.10"
-        provided files('../libs/BungeeCord.jar')
+        compile files('../libs/BungeeCord.jar')
+    }
+
+    jar {
+        from {
+            configurations.include.collect { it.isDirectory() ? it : zipTree(it) }
+        }
     }
 
 }
 
 project(":Core") {
+
     dependencies {
-        compile 'com.google.code.gson:gson:2.2.4'
-        compile project(':API')
+        include 'com.google.code.gson:gson:2.2.4'
+        include(project(':API')) {
+            transitive = false
+        }
     }
+
 }

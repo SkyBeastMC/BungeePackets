@@ -10,9 +10,16 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Core_main" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../libs/BungeeCord.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Gradle: org.projectlombok:lombok:1.16.10" level="project" />
-    <orderEntry type="library" name="Gradle: com.googlecode.json-simple:json-simple:1.1" level="project" />
-    <orderEntry type="module" module-name="API_main" />
   </component>
   <component name="TestModuleProperties" production-module="Core_main" />
 </module>

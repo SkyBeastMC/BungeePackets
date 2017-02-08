@@ -1,3 +1,4 @@
 name: Main
 version: 2.0 b1
-main: org.spawl.bungeepackets.MainSkyBeast, forked from Spawl
+main: org.spawl.bungeepackets.Main
+author: SkyBeast, forked from Spawl

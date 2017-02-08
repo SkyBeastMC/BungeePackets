@@ -31,7 +31,7 @@ public class ItemStackImpl implements ItemStack
 	private static final String DISPLAY = "display";
 	private static final String LORE = "Lore";
 	private static final String ENCHANTMENTS = "ench";
-	private static final String ENCHANTMENTS_ID = "windowID";
+	private static final String ENCHANTMENTS_ID = "id";
 	private static final String ENCHANTMENTS_LVL = "lvl";
 	private static final String HIDEFLAGS = "HideFlags";
 	private static final String UNBREAKABLE = "Unbreakable";

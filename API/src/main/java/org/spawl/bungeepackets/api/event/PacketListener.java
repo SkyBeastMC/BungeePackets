@@ -9,7 +9,6 @@ import net.md_5.bungee.protocol.DefinedPacket;
  */
 public interface PacketListener
 {
-
 	default boolean onBungeeToPlayer(DefinedPacket packet, ProxiedPlayer user)
 	{
 		return false;
@@ -19,6 +18,7 @@ public interface PacketListener
 	{
 		return false;
 	}
+
 	default boolean onPlayerToBungee(DefinedPacket packet, ProxiedPlayer user)
 	{
 		return false;
