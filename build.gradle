@@ -30,21 +30,32 @@ dependencies {
 }
 */
 
-apply plugin: 'java'
+allprojects {
 
-configurations {
-    provided
+    apply plugin: 'java'
+
+    configurations {
+        provided
+    }
+
+    sourceSets {
+        main { compileClasspath += configurations.provided }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile "org.projectlombok:lombok:1.16.10"
+        provided files('../libs/BungeeCord.jar')
+    }
+
 }
 
-sourceSets {
-    main { compileClasspath += configurations.provided }
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile "org.projectlombok:lombok:1.16.10"
-    provided files('libs/BungeeCord.jar')
+project(":Core") {
+    dependencies {
+        compile 'com.google.code.gson:gson:2.2.4'
+        compile project(':API')
+    }
 }

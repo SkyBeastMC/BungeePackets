@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/API/API.iml" filepath="$PROJECT_DIR$/.idea/modules/API/API.iml" group="API" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/API/API_main.iml" filepath="$PROJECT_DIR$/.idea/modules/API/API_main.iml" group="API" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/API/API_test.iml" filepath="$PROJECT_DIR$/.idea/modules/API/API_test.iml" group="API" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BungeePackets.iml" filepath="$PROJECT_DIR$/.idea/modules/BungeePackets.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BungeePackets_main.iml" filepath="$PROJECT_DIR$/.idea/modules/BungeePackets_main.iml" group="BungeePackets" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BungeePackets_test.iml" filepath="$PROJECT_DIR$/.idea/modules/BungeePackets_test.iml" group="BungeePackets" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Core/Core.iml" filepath="$PROJECT_DIR$/.idea/modules/Core/Core.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Core/Core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Core/Core_main.iml" group="Core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Core/Core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Core/Core_test.iml" group="Core" />
     </modules>
   </component>
 </project>

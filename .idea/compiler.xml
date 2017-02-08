@@ -2,8 +2,14 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="API_main" target="1.8" />
+      <module name="API_test" target="1.8" />
       <module name="BungeePackets_main" target="1.8" />
       <module name="BungeePackets_test" target="1.8" />
+      <module name="Core_main" target="1.8" />
+      <module name="Core_test" target="1.8" />
+      <module name="Protocol_main" target="1.8" />
+      <module name="Protocol_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -13,7 +13,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../libs/BungeeCord.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../libs/BungeeCord.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
